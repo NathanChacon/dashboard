@@ -9,6 +9,7 @@ import {
     deleteUserById
 } from '../../redux/users/users';
 import ConfirmDialog from '../../components/confirmDialog';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function Dashboard() {
 
@@ -19,11 +20,7 @@ export function Dashboard() {
         name: user.name,
         username: user.username,
         city: user.address.city,
-        email: user.email,
-        actions: <span>
-                  <Button onClick={() => {onDeleteUser(user.id)}}>DELETE</Button>
-                  <Button onClick={() => {onEditUser(user.id)}}>EDIT</Button>
-                </span>
+        email: user.email
       }
     })
 
@@ -32,34 +29,97 @@ export function Dashboard() {
 
   const getTableColumns = () => {
     const columns = [
-      {
-        key: "id",
-        title: "Id"
+      { 
+        field: 'id',
+        headerName: 'ID', 
+        disableClickEventBubbling: true,
+        flex: 1,
+        minWidth: 90
+      },
+      { 
+        field: 'name', 
+        headerName: 'Name', 
+        sortable: false, 
+        disableClickEventBubbling: true,
+        flex: 1,
+        minWidth: 150
+      },
+      { 
+        field: 'username', 
+        headerName: 'Username', 
+        sortable: false, 
+        disableClickEventBubbling: true,
+        flex: 1,
+        minWidth: 150
       },
       {
-        key: "name",
-        title: "Name"
+        field: 'city',
+        headerName: 'City',
+        sortable: false,
+        disableClickEventBubbling: true,
+        flex: 1,
+        minWidth: 150
       },
       {
-        key: "username",
-        title: "Username"
+        field: 'email',
+        headerName: 'Email',
+        sortable: false,
+        disableClickEventBubbling: true,
+        flex: 1,
+        minWidth: 190
       },
       {
-        key: "city",
-        title: "City"
+        field: 'edit',
+        sortable: false,
+        headerName: 'Edit',
+        disableClickEventBubbling: true,
+        renderCell: renderDeleteButton,
+        flex: 1,
+        minWidth: 120
       },
       {
-        key: "email",
-        title: "Email"
+        field: 'delete',
+        sortable: false,
+        headerName: 'Delete',
+        disableClickEventBubbling: true,
+        renderCell: renderEditButton,
+        flex: 1,
+        minWidth: 120
       },
-      {
-        key: "actions",
-        title: ""
-      }
-    ]
+    ];
 
     return columns
   }
+
+  const renderEditButton = (params) => {
+    return (
+        <strong>
+            <Button
+                size="small"
+                onClick={() => {
+                    onEditUser(params.row.id)
+                }}
+            >
+                Edit
+            </Button>
+        </strong>
+    )
+}
+
+const renderDeleteButton = (params) => {
+  return (
+      <strong>
+          <Button
+              size="small"
+              onClick={() => {
+                  onDeleteUser(params.row.id)
+              }}
+          >
+              Delete
+          </Button>
+      </strong>
+  )
+}
 
   const onDeleteUser = (userId) => {
     setSelectedUserId(userId)
@@ -67,7 +127,7 @@ export function Dashboard() {
   }
 
   const onEditUser = (userId) => {
-    console.log(userId)
+    navigate(`/user/${userId}`)
   }
 
   const onCloseDeleteUserDialog = () => {
@@ -83,8 +143,9 @@ export function Dashboard() {
     onCloseDeleteUserDialog()
   }
 
-  const users = useSelector(selectAllUsers);
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const users = useSelector(selectAllUsers)
+  const dispatch = useDispatch()
   const rows = getTableRows(users)
   const columns = getTableColumns()
   const deleteUserDialogTitle = "Are you sure that you want to delete this user ?"
@@ -100,14 +161,28 @@ export function Dashboard() {
       <header >
         <h1>Dashboard</h1>
       </header>
-      <Table rows={rows} columns={columns}/>
+      <Box>
+        <Box 
+          sx={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            flexDirection: 'column',
+            p: 1
+          }}
+        >
+          <Link to={"/user"} style={{ textDecoration: 'none' }}>
+            <Button>Add user</Button>
+          </Link>
+        </Box>
+        <Table rows={rows} columns={columns}/>
+      </Box>
       <ConfirmDialog  
-        onClose={onCloseDeleteUserDialog}  
-        open={isDeleteUserDialogOpen} 
-        title={deleteUserDialogTitle} 
-        onCancel={onCloseDeleteUserDialog}
-        onConfirm={onConfirmDeleteUserDialog}
-      />
+          onClose={onCloseDeleteUserDialog}  
+          open={isDeleteUserDialogOpen} 
+          title={deleteUserDialogTitle} 
+          onCancel={onCloseDeleteUserDialog}
+          onConfirm={onConfirmDeleteUserDialog}
+        />
     </Box>
   );
 }

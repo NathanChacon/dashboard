@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dashboard } from './pages/dashboard';
+import { UserForm } from './pages/userForm';
 import {
   BrowserRouter,
   Routes,
@@ -11,6 +12,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard />} />
+        <Route path="/user" element={<UserForm />} />
+        <Route path="/user/:id" element={<UserForm />} />
       </Routes>
     </BrowserRouter>
   );
