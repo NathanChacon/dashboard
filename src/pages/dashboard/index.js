@@ -10,6 +10,9 @@ import {
 import {selectAllUsers} from '../../redux/users/selectors'
 import ConfirmDialog from '../../components/confirmDialog'
 import { Link, useNavigate } from 'react-router-dom'
+import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
+import IconButton from '@mui/material/IconButton'
 
 export function Dashboard() {
 
@@ -73,7 +76,7 @@ export function Dashboard() {
         sortable: false,
         headerName: 'Edit',
         disableClickEventBubbling: true,
-        renderCell: renderDeleteButton,
+        renderCell: renderEditButton,
         flex: 1,
         minWidth: 120
       },
@@ -82,11 +85,11 @@ export function Dashboard() {
         sortable: false,
         headerName: 'Delete',
         disableClickEventBubbling: true,
-        renderCell: renderEditButton,
+        renderCell: renderDeleteButton,
         flex: 1,
         minWidth: 120
       },
-    ];
+    ]
 
     return columns
   }
@@ -94,14 +97,11 @@ export function Dashboard() {
   const renderEditButton = (params) => {
     return (
         <strong>
-            <Button
-                size="small"
-                onClick={() => {
-                    onEditUser(params.row.id)
-                }}
-            >
-                Edit
-            </Button>
+      <strong>
+        <IconButton aria-label="delete" size='small' onClick={() => {onEditUser(params.row.id)}}>
+          <EditIcon />
+        </IconButton>
+      </strong>
         </strong>
     )
 }
@@ -109,14 +109,9 @@ export function Dashboard() {
 const renderDeleteButton = (params) => {
   return (
       <strong>
-          <Button
-              size="small"
-              onClick={() => {
-                  onDeleteUser(params.row.id)
-              }}
-          >
-              Delete
-          </Button>
+        <IconButton aria-label="delete" size='small' onClick={() => {onDeleteUser(params.row.id)}}>
+          <DeleteIcon />
+        </IconButton>
       </strong>
   )
 }
@@ -186,5 +181,5 @@ const renderDeleteButton = (params) => {
           onConfirm={onConfirmDeleteUserDialog}
         />
     </Box>
-  );
+  )
 }

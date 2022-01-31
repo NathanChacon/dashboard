@@ -9,5 +9,5 @@ export function fetchUsers() {
       .catch((error) => {
         reject()
       })
-    );
+    )
   }

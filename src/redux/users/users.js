@@ -5,7 +5,7 @@ const initialState = {
     users: [],
     status:  'idle',
     error: null
-};
+}
 
 export const fetchUsersAsync = createAsyncThunk(
   'users/fetchUsers',
@@ -14,7 +14,7 @@ export const fetchUsersAsync = createAsyncThunk(
 
     return response.data
   }
-);
+)
 
 export const usersSlice = createSlice({
   name: 'users',
@@ -53,9 +53,9 @@ export const usersSlice = createSlice({
       .addCase(fetchUsersAsync.rejected, (state, action) => {
         state.status = 'idle'
         state.error = "Error while trying to get users"
-      });
+      })
   },
-});
+})
 
 export const {deleteUserById, addUser, editUserById} = usersSlice.actions
 

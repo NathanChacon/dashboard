@@ -1,11 +1,11 @@
-import React from 'react';
-import { Dashboard } from './pages/dashboard';
-import { UserForm } from './pages/userForm';
+import React from 'react'
+import { Dashboard } from './pages/dashboard'
+import { UserForm } from './pages/userForm'
 import {
   BrowserRouter,
   Routes,
   Route
-} from "react-router-dom";
+} from "react-router-dom"
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path="/user/:userId" element={<UserForm />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
 export default App
