@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 
 function ConfirmDialog(props) {
-  const { onClose, selectedValue, open, title, onCancel, onConfirm} = props
+  const { onClose, open, title, onCancel, onConfirm} = props
 
   const handleClose = () => {
     onClose()

@@ -7,7 +7,6 @@ import { Button } from '@mui/material'
 import { addUser, editUserById } from '../../redux/users/users'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams} from "react-router-dom"
-import { useEffect } from 'react'
 import { selectUserById } from '../../redux/users/selectors'
 
 export const UserForm = () => {
