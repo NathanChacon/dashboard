@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/user" element={<UserForm />} />
-        <Route path="/user/:id" element={<UserForm />} />
+        <Route path="/user/:userId" element={<UserForm />} />
       </Routes>
     </BrowserRouter>
   );

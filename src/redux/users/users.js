@@ -23,6 +23,20 @@ export const usersSlice = createSlice({
     deleteUserById: (state, action) => {
       const idToDelete = action.payload
       state.users = state.users.filter((user) => user.id !== idToDelete)
+    },
+    addUser: (state, action) => {
+      state.users.push(action.payload)
+    },
+    editUserById: (state, action) => {
+      const userId = parseInt(action.payload.id)
+      state.users = state.users.map((user) => {
+        if(user.id === userId){
+          return {...action.payload}
+        }
+        else{
+          return user
+        }
+      })
     }
   },
   extraReducers: (builder) => {
@@ -43,6 +57,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const {deleteUserById} = usersSlice.actions
+export const {deleteUserById, addUser, editUserById} = usersSlice.actions
 
 export default usersSlice.reducer

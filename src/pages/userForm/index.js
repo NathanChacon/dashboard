@@ -4,17 +4,65 @@ import Paper from '@mui/material/Paper'
 import {Controller, useForm} from 'react-hook-form'
 import './styles.css'
 import { Button } from '@mui/material'
+import { addUser, editUserById } from '../../redux/users/users'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate, useParams} from "react-router-dom"
+import { useEffect } from 'react'
+import { selectUserById } from '../../redux/users/selectors'
 
 export const UserForm = () => {
-    
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const {userId} = useParams()
+    const userBeingEdited = useSelector((state) => selectUserById(state, parseInt(userId)))
     const {
         handleSubmit,
         control,
         formState: { errors }
-      } = useForm();
+      } = useForm()
 
     const onSubmitForm = (data) => {
-        console.log(data)
+        if(userBeingEdited){
+            handleEditUser(userId, data)
+        }
+        else{
+            handleCreateUser(data)
+        }
+
+        navigate("/")
+    }
+
+    const handleCreateUser = (data) => {
+        const user = {
+            id: getRandomInt(30, 1000),
+            name: data.name,
+            username: data.username,
+            address: {
+                city: data.city
+            },
+            email: data.email
+        }
+
+        dispatch(addUser(user))
+    }
+
+    const handleEditUser = (userId, data) => {
+        const editedUser = {
+            id: userId,
+            name: data.name,
+            username: data.username,
+            address: {
+                city: data.city
+            },
+            email: data.email
+        }
+        dispatch(editUserById(editedUser))
+    } 
+
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     return (
@@ -51,7 +99,7 @@ export const UserForm = () => {
                         <Controller
                                 name="name"
                                 control={control}
-                                defaultValue={""}
+                                defaultValue={userBeingEdited ? userBeingEdited.name : ""}
                                 rules={{ required: "name is required" }}
                                 render={({ field: { ref, ...field } }) => (
                                     <TextField
@@ -70,7 +118,7 @@ export const UserForm = () => {
                         <Controller
                             name="username"
                             control={control}
-                            defaultValue={""}
+                            defaultValue={userBeingEdited ? userBeingEdited.username : ""}
                             rules={{ required: "Username is required" }}
                             render={({ field: { ref, ...field } }) => (
                                 <TextField
@@ -91,7 +139,7 @@ export const UserForm = () => {
                         <Controller
                             name="email"
                             control={control}
-                            defaultValue={""}
+                            defaultValue={userBeingEdited ? userBeingEdited.email : ""}
                             rules={{
                                 required: "Email is required", 
                                 pattern: {
@@ -116,7 +164,7 @@ export const UserForm = () => {
                         <Controller
                             name="city"
                             control={control}
-                            defaultValue={""}
+                            defaultValue={userBeingEdited ? userBeingEdited.address.city : ""}
                             rules={{ required: "City is required" }}
                             render={({ field: { ref, ...field } }) => (
                                 <TextField
@@ -138,7 +186,7 @@ export const UserForm = () => {
                         justifyContent: 'flex-end',
                         pt: 2
                     }}>
-                    <Button size='small' sx={{mr: 1}} variant='contained' color="error" >Cancel</Button>
+                    <Button size='small' sx={{mr: 1}} variant='contained' color="error" onClick={() => navigate('/')}>Cancel</Button>
                     <Button size='small' variant='contained' color="success" onClick={handleSubmit(onSubmitForm)}>Submit</Button>
                 </Box>
             </Paper>

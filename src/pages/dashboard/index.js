@@ -153,7 +153,9 @@ const renderDeleteButton = (params) => {
   const [selectedUserId, setSelectedUserId] = useState(null)
 
   useEffect(() => {
+    if(users.length === 0){
       dispatch(fetchUsersAsync())
+    }
   }, [])
 
   return (
