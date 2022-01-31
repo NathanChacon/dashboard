@@ -1,15 +1,15 @@
-import { Button } from '@mui/material';
-import { Box } from '@mui/system';
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '@mui/material'
+import { Box } from '@mui/system'
+import React, { useEffect, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import Table from '../../components/table'
 import {
     fetchUsersAsync,
-    selectAllUsers,
     deleteUserById
-} from '../../redux/users/users';
-import ConfirmDialog from '../../components/confirmDialog';
-import { Link, useNavigate } from 'react-router-dom';
+} from '../../redux/users/users'
+import {selectAllUsers} from '../../redux/users/selectors'
+import ConfirmDialog from '../../components/confirmDialog'
+import { Link, useNavigate } from 'react-router-dom'
 
 export function Dashboard() {
 
@@ -34,7 +34,8 @@ export function Dashboard() {
         headerName: 'ID', 
         disableClickEventBubbling: true,
         flex: 1,
-        minWidth: 90
+        minWidth: 90,
+        sortable: false
       },
       { 
         field: 'name', 
@@ -47,7 +48,6 @@ export function Dashboard() {
       { 
         field: 'username', 
         headerName: 'Username', 
-        sortable: false, 
         disableClickEventBubbling: true,
         flex: 1,
         minWidth: 150

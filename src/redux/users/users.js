@@ -45,6 +45,4 @@ export const usersSlice = createSlice({
 
 export const {deleteUserById} = usersSlice.actions
 
-export const selectAllUsers = (state) => state.users.users
-
 export default usersSlice.reducer
