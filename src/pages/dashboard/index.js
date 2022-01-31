@@ -12,6 +12,7 @@ import ConfirmDialog from '../../components/confirmDialog'
 import { Link, useNavigate } from 'react-router-dom'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
+import AddIcon from '@material-ui/icons/Add'
 import IconButton from '@mui/material/IconButton'
 
 export function Dashboard() {
@@ -168,7 +169,7 @@ const renderDeleteButton = (params) => {
           }}
         >
           <Link to={"/user"} style={{ textDecoration: 'none' }}>
-            <Button variant='contained' color='primary'>Add user</Button>
+            <Button variant='contained' color='primary' startIcon={<AddIcon/>}>Add user</Button>
           </Link>
         </Box>
         <Table rows={rows} columns={columns}/>
