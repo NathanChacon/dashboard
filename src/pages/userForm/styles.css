@@ -1,0 +1,6 @@
+@media (max-width: 600px)
+{
+    .user-form .MuiTextField-root{
+        width: 100%;
+    }
+}
