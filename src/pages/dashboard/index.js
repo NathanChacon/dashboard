@@ -171,7 +171,7 @@ const renderDeleteButton = (params) => {
           }}
         >
           <Link to={"/user"} style={{ textDecoration: 'none' }}>
-            <Button>Add user</Button>
+            <Button variant='contained' color='primary'>Add user</Button>
           </Link>
         </Box>
         <Table rows={rows} columns={columns}/>
