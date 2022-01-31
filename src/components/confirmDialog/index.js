@@ -15,8 +15,8 @@ function ConfirmDialog(props) {
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>{title}</DialogTitle>
       <DialogActions>
-          <Button onClick={onCancel}>Cancel</Button>
-          <Button onClick={onConfirm}>Confirm</Button>
+          <Button variant='contained' color='error' onClick={onCancel}>Cancel</Button>
+          <Button variant='contained' color='success' onClick={onConfirm}>Confirm</Button>
         </DialogActions>
     </Dialog>
   );
